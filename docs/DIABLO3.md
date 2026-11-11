@@ -19,7 +19,11 @@ Necromancer, `NECROMANCER00003`) only when the system sends ENTITLEMENT_UPDATE (
 ADDCONTENT_INSTALL (0x10000009): its system event loop (`sceSystemServiceReceiveEvent`) creates the
 add-on refresh job, which calls `sceAppContentGetAddcontInfoList` for service labels 0 and 1 and
 sets one ownership bit per known label. The runtime sends one ENTITLEMENT_UPDATE once AppContent is
-initialized and add-ons are installed (`src/runtime_services.c`).
+initialized and add-ons are installed (`src/runtime_services.c`). The Diablo profiles set
+`SANCTUARY_ADDCONT_ALL=1`: the runtime then reports the known labels (`DIABLO3_ADDONS` in
+`scripts/game_profiles.py`; currently `NECROMANCER00003`) as installed without any addcont folders,
+and `run.py` also ensures those label folders exist, so the Necromancer unlocks on every start
+whether or not the runtime has the switch.
 
 Both share their saves (the game keeps them under `CUSA00242`); 1.47 upgrades a 1.00 save after
 asking. Update PKGs keep the game's content type (0x1A): the installer tells them apart by

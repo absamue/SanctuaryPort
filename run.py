@@ -274,6 +274,11 @@ def main():
             if title in game_profiles.DIABLO3_TITLES else [title]
         for candidate in titles if title else []:
             addcont = Path(base_game).resolve().parent / 'addcont' / candidate
+            if title in game_profiles.DIABLO3_TITLES:
+                # Entitlement-only add-ons (Necromancer, cosmetic packs): make the known labels
+                # always exist, so the runtime reports them installed. The folders carry no data.
+                for label in game_profiles.DIABLO3_ADDONS:
+                    (addcont / label).mkdir(parents=True, exist_ok=True)
             if 'SANCTUARY_ADDCONT_DIR' not in env and addcont.is_dir():
                 env['SANCTUARY_ADDCONT_DIR'] = str(addcont)
                 print(f'Add-ons: {addcont}', flush=True)

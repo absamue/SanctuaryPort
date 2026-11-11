@@ -62,7 +62,11 @@ PROFILES = {
                           # the frame rate patch the game does not have; its render resolutions are
                           # those patches/Diablo_III.xml has.
                           'SANCTUARY_MENU_HIDE': 'vsync,engine_fps,readbacks',
-                          'SANCTUARY_ALLOWED_RESOLUTIONS': 'native;480p;720p;900p;1440p;1800p;4K'}},
+                          'SANCTUARY_ALLOWED_RESOLUTIONS': 'native;480p;720p;900p;1440p;1800p;4K',
+                          # Diablo III's add-ons are entitlement-only: always report the known
+                          # labels as installed, so the Necromancer unlocks without addcont
+                          # folders (src/runtime_content.c, SANCTUARY_ADDCONT_ALL).
+                          'SANCTUARY_ADDCONT_ALL': '1'}},
 }
 # Diablo III: Reaper of Souls - Ultimate Evil Edition, Brazilian release (Portuguese and Spanish
 # text; usually played with its 1.47 update in SANCTUARY_PATCH_DIR): the same engine and needs.
@@ -70,6 +74,10 @@ PROFILES = {
 PROFILES['CUSA00243'] = {**PROFILES['CUSA00242'],
                          'modules': ('libc.prx', 'libSceFios2.prx', 'libSceNpToolkit2.prx')}
 DIABLO3_TITLES = ('CUSA00242', 'CUSA00243')
+# Add-on labels the game unlocks by entitlement only (no data to mount): the runtime reports them
+# installed with SANCTUARY_ADDCONT_ALL=1 and run.py ensures their folders, so the Necromancer is
+# always available.
+DIABLO3_ADDONS = ('NECROMANCER00003',)
 DEFAULT = {'name': None, 'modules': ('libc.prx', 'libSceFios2.prx')}
 
 
